@@ -22,7 +22,7 @@ AIエキスパート人材育成コースで実施したスピーチ動作の評
 13d_AudioStrength_fixed.py：音声データ固定の時系列データ作成、骨格座標はそのまま<br>
 <21_学習評価><br>
 21_transformer_encoder.py：4値分類学習、評価<br>
-<data2><br>
+<設定ファイル:data2><br>
 conf.csv：動画mp4データのフレームレート<br>
 label.csv：学習データラベル<br>
 results.csv：テストデータラベル<br>
