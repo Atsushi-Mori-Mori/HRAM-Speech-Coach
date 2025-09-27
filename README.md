@@ -26,7 +26,6 @@ AIエキスパート人材育成コースで実施したスピーチ動作の評
 conf.csv：動画mp4データのフレームレート<br>
 label.csv：学習データラベル<br>
 results.csv：テストデータラベル<br>
-predict_eva.csv：評価結果出力結果<br>
 
 ## 入力データセット
 data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
@@ -38,11 +37,9 @@ data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
 ## 基本的な使い方
 
 
-## 作成される問題例
-
-
 ## 出力ファイルと保存先
-
+<出力ファイル:data2><br>
+predict_eva.csv：評価結果出力結果<br>
 
 ## ファイルサイズ
 
