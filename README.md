@@ -20,17 +20,16 @@ AIエキスパート人材育成コースで実施したスピーチ動作の評
 13b_RightWrist_fixed.py：右手首固定のMovenet骨格座標データ作成<br>
 13c_BothWrists_fixed.py：両手首固定のMovenet骨格座標データ作成<br>
 13d_AudioStrength_fixed.py：音声データ固定の時系列データ作成、骨格座標はそのまま<br>
-
 <21_学習評価><br>
 21_transformer_encoder.py：4値分類学習、評価<br>
-data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
+<data2><br>
+conf.csv：動画mp4データのフレームレート<br>
 label.csv：学習データラベル<br>
 results.csv：テストデータラベル<br>
 predict_eva.csv：評価結果出力結果<br>
 
 ## 入力データセット
-AIMEの1983年から2023年(+2024年Part2 まで)を網羅した約933問から選択<br>
-https://huggingface.co/datasets/di-zhang-fdu/AIME_1983_2024<br>
+data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
 
 
 ## 動作環境
