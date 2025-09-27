@@ -9,7 +9,24 @@ AIエキスパート人材育成コースで実施したスピーチ動作の評
 <img src="docs2/images/speech.jpg" alt="スピーチ動作4分類" width="480">
 
 ## プログラム及びデータ概要
-AIME_Synthesis.py: 11分野各問x11分野<br>
+<11_データセット作成><br>
+11a_Movenet_mp4topnkp.py：mp4動画からmovenetで骨格座標を抽出する<br>
+11b_pnkp+Audio.py：mp3から音声データを抽出しフレーム同期させる<br>
+11c_10sec_samples.py：骨格座標と音声データのテーブルから特定条件の10秒間のデータを抽出する<br>
+12a_XXsec_samples.py：骨格座標と音声データのテーブルから特定条件(*1)の連続秒数最大のデータを抽出する<br>
+12b_1secSW_samples.py：一連連続データサンプルからスライディングウィンドウ(1秒)サンプルを作成<br>
+12c_XsecSW_samples.py：一連連続データサンプルからスライディングウィンドウサンプルを作成<br>
+13a_LeftWrist_fixed.py：左手首固定のMovenet骨格座標データ作成<br>
+13b_RightWrist_fixed.py：右手首固定のMovenet骨格座標データ作成<br>
+13c_BothWrists_fixed.py：両手首固定のMovenet骨格座標データ作成<br>
+13d_AudioStrength_fixed.py：音声データ固定の時系列データ作成、骨格座標はそのまま<br>
+
+<21_学習評価><br>
+21_transformer_encoder.py：4値分類学習、評価<br>
+data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
+label.csv：学習データラベル<br>
+results.csv：テストデータラベル<br>
+predict_eva.csv：評価結果出力結果<br>
 
 ## 入力データセット
 AIMEの1983年から2023年(+2024年Part2 まで)を網羅した約933問から選択<br>
