@@ -35,7 +35,17 @@ data_csv.7z：学習データ(train/test)、評価データ(eva)<br>
 - Windows / Python(Anaconda等) / OpenAI-APIなど
 
 ## 基本的な使い方
+(0)ビデオデータmp4のダウンロード<br>
+TED talkサイトからスピーチ動画をダウンロードして640x480の動画へリサイズする。<br>
+※TED動画は非営利目的であれば無償で利用可能である。<br>
 
+(1)コアサンプルの作成<br>
+
+(2)サンプルデータ増強<br>
+
+(3)4値分類学習<br>
+
+(4)評価<br>
 
 ## 出力ファイルと保存先
 <出力ファイル:data2><br>
@@ -47,6 +57,8 @@ predict_eva.csv：評価結果出力結果<br>
 ## 関連リンク
 HRAM<br>
 https://hram.or.jp/guidance/<br>
+TEDトークサイト<br>
+https://www.ted.com/talks<br>
 
 ## 注意事項
 
