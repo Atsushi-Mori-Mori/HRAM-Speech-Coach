@@ -84,16 +84,13 @@ predict_eva.csv：評価結果出力結果<br>
 ## フォルダ構成
 <details>
   <summary>ディレクトリ構成を開く</summary>
-```text
-実行フォルダ/<br>
+実行フォルダ(プログラム格納)<br>
 ├─ data_csv/<br>
-│  ├─ train/<br>
-│  ├─ test/<br>
-│  └─ eva/<br>
-├─ docs/<br>
-│  └─ images/<br>
-│     ├─ overview.jpg<br>
-│     └─ ...<br>
+│　├─ train/<br>
+│　├─ test/<br>
+│　└─ eva/<br>
+├─ label.csv
+└─ results.csv
 </details>
 
 ## ファイルサイズ
