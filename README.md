@@ -82,17 +82,15 @@ predict_eva.csv：評価結果出力結果<br>
 確信度合いに重みを掛けて点数付けをすることが可能である。<br>
 
 ## フォルダ構成
-repo/
-├─ data_csv/
-│  ├─ train/
-│  │  ├─ 0001.csv
-│  │  └─ ...
-│  ├─ test/
-│  └─ eva/
-├─ docs/
-│  └─ images/
-│     ├─ overview.jpg
-│     └─ ...
+実行フォルダ/<br>
+├─ data_csv/<br>
+│  ├─ train/<br>
+│  ├─ test/<br>
+│  └─ eva/<br>
+├─ docs/<br>
+│  └─ images/<br>
+│     ├─ overview.jpg<br>
+│     └─ ...<br>
 
 ## ファイルサイズ
 データセット：322MB<br>
