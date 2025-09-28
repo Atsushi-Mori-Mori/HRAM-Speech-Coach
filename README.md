@@ -84,6 +84,7 @@ predict_eva.csv：評価結果出力結果<br>
 ## フォルダ構成
 <details>
   <summary>ディレクトリ構成を開く</summary>
+```text
 実行フォルダ/<br>
 ├─ data_csv/<br>
 │  ├─ train/<br>
