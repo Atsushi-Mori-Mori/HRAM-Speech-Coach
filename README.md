@@ -67,6 +67,8 @@ HRAM<br>
 https://hram.or.jp/guidance/<br>
 TEDトークサイト<br>
 https://www.ted.com/talks<br>
+データセット格納サイト<br>
+https://huggingface.co/datasets/Amouri28/hram-speech-coach-dataset<br>
 
 ## 注意事項
 
