@@ -30,8 +30,8 @@ results.csv：テストデータラベル<br>
 
 ## 入力データセット
 関連リンク記載のHuggingFaceにデータセットを格納。<br>
-学習データ(train/test)<br>
-評価データ(eva)<br>
+学習データ(train[7054サンプル]/test[255サンプル])<br>
+評価データ(eva[63サンプル])<br>
 
 ## 動作環境
 - Windows / Python(Anaconda等) / OpenAI-APIなど
