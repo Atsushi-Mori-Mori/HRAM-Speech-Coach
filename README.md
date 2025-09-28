@@ -29,12 +29,16 @@ label.csv：学習データラベル<br>
 results.csv：テストデータラベル<br>
 
 ## 入力データセット
-関連リンク記載のHuggingFaceにデータセットを格納。<br>
+関連リンク記載のHuggingFaceにデータセットが格納されている。<br>
+プログラムにより、フォルダcsv_recoveredに下記フォルダが作成されてcsvファイルがダウンロードされる。<br>
+※実行前に、HuggingFaceのトークンをHUGGINGFACE_HUB_TOKENへ設定しておく。<br>
+フォルダcsv_recoveredをフォルダdata_csvへリネームする。<br>
 学習データ(train[7054サンプル]/test[255サンプル])<br>
 評価データ(eva[63サンプル])<br>
+学習データにはデータ増強サンプルも全て含まれている。<br>
 
 ## 動作環境
-- Windows / Python(Anaconda等) / OpenAI-APIなど
+- Windows / Python(Anaconda等)など
 
 ## 基本的な使い方
 (0)ビデオデータmp4のダウンロード<br>
@@ -62,8 +66,10 @@ TED talkサイトからスピーチ動画をダウンロードして640x480の�
 <出力ファイル:data2><br>
 predict_eva.csv：評価結果出力結果<br>
 
-## ファイルサイズ
+## フォルダ構成
 
+## ファイルサイズ
+データセット：322MB<br>
 
 ## 関連リンク
 HRAM<br>
@@ -74,6 +80,6 @@ https://www.ted.com/talks<br>
 https://huggingface.co/datasets/Amouri28/hram-speech-coach-dataset<br>
 
 ## 注意事項
-
+特になし
 
 
