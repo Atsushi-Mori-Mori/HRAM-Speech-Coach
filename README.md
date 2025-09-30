@@ -154,13 +154,13 @@ The eva dataset consists of 63 samples (5 speeches with 11, 11, 13, 13, 15 sampl
 
 ## 出力ファイルと保存先(Output Files and Storage)
 上記(4)評価を実行した結果の例を以下のファイルに出力される。<br>
-<出力ファイル:data><br>
+- 出力ファイル:data<br>
 predict_eva.csv：評価結果出力結果<br>
 出力ファイルには、4値分類の予測と、その予測の確信度合いが出力される。<br>
 確信度合いに重みを掛けて点数付けをすることが可能である。<br>
 
 The results of executing the evaluation described in (4) above are output to the following file.<br>
-<Output file:data><br>
+- Output file:data<br>
 predict_eva.csv: Evaluation result output<br>
 The output file contains predictions for the four-value classification and the confidence level for each prediction.<br>
 It is possible to assign scores by weighting the confidence levels.<br>
