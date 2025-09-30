@@ -109,13 +109,6 @@ TED talkサイトからスピーチ動画をダウンロードして640x480の�
 train/testデータによる4値分類学習プログラムの最後で、evaデータによる評価を行う。<br>
 evaデータは63サンプル(11,11,13,13,15サンプルの5つのスピーチ)から構成される。<br>
 
-## 出力ファイルと保存先(Output Files and Storage)
-上記(4)評価を実行した結果の例を以下のファイルに出力される。<br>
-<出力ファイル:data2><br>
-predict_eva.csv：評価結果出力結果<br>
-出力ファイルには、4値分類の予測と、その予測の確信度合いが出力される。<br>
-確信度合いに重みを掛けて点数付けをすることが可能である。<br>
-
 (0) Download mp4 video data<br>
 Download speech videos from the TED talk site and resize them to 640x480.
 TED videos are free to use for non-commercial purposes.
@@ -158,6 +151,15 @@ The former mainly capture hand movements, while the latter are expected to captu
 The model trained in step (3) can be used as an evaluation model.
 At the end of the 4-class classification training program using train/test data, evaluation is performed with eva data.
 The eva dataset consists of 63 samples (5 speeches with 11, 11, 13, 13, 15 samples each).<br>
+
+## 出力ファイルと保存先(Output Files and Storage)
+上記(4)評価を実行した結果の例を以下のファイルに出力される。<br>
+<出力ファイル:data2><br>
+predict_eva.csv：評価結果出力結果<br>
+出力ファイルには、4値分類の予測と、その予測の確信度合いが出力される。<br>
+確信度合いに重みを掛けて点数付けをすることが可能である。<br>
+
+
 
 ## フォルダ構成(Folder Structure)
 <details>
