@@ -29,6 +29,7 @@ import numpy as np
 ### データセット作成
 # # -------------------------------------------------------
 import torch
+import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, Subset
 from sklearn.model_selection import KFold
 import torch.nn as nn
@@ -40,7 +41,7 @@ import glob
 # カスタムデータセットクラス（学習用、ラベル付き）
 class CsvDatasetWithLabels(Dataset):
     def __init__(self, data_folder, label_file):
-        self.data_folder = data_folder
+
         self.labels_df = pd.read_csv(label_file)
         self.filepaths = glob.glob(os.path.join(data_folder, "*.csv"))
         self.labels = []
@@ -162,8 +163,9 @@ def cross_validate(train_dataset, k_folds, model_class, input_dim, hidden_dim, n
     return mean_accuracy
 
 # 最終学習とテスト実行
-def final_training_and_testing(train_dataset, test_loader, model_class, input_dim, hidden_dim, num_heads, num_layers, num_classes, learning_rate, num_epochs, device):
+def final_training_and_testing(train_dataset, test_loader, eva_loader, model_class, input_dim, hidden_dim, num_heads, num_layers, num_classes, learning_rate, num_epochs, device):
     # 全データを使って再学習
+    model_save_path = './models'
     train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
     model = model_class(input_dim, hidden_dim, num_heads, num_layers, num_classes).to(device)
     criterion = nn.CrossEntropyLoss()
@@ -173,6 +175,11 @@ def final_training_and_testing(train_dataset, test_loader, model_class, input_di
     for epoch in range(num_epochs):
         train_loss = train_model(train_loader, model, criterion, optimizer, device)
         print(f'Final Training Epoch {epoch+1}/{num_epochs}, Loss: {train_loss:.4f}')
+        
+        # モデルの保存（任意のエポックごと、例えば5エポックごとに保存）
+        if (epoch + 1) % num_epochs == 0:
+            save_model(model, optimizer, epoch + 1, f"{model_save_path}/model_epoch_{epoch+1}.pth")
+            print(f"Model saved at epoch {epoch + 1}")
 
     # テスト推論
     model.eval()
@@ -186,29 +193,47 @@ def final_training_and_testing(train_dataset, test_loader, model_class, input_di
             predicted_class = torch.argmax(output, dim=1).cpu().numpy()
             predictions.append(predicted_class[0])
 
-    return predictions
+    # 評価サンプル推論
+    model.eval()
+    prediction2 = []
+    all_confidence2 = []  # 各サンプルのクラスごとの確信度を保存するリスト
+
+    with torch.no_grad():
+        for batch_data2 in eva_loader:
+            batch_data2 = batch_data2.to(device)
+            batch_data2 = batch_data2.permute(1, 0, 2)
+            output2 = model(batch_data2)
+            # ソフトマックスで各クラスの確率を計算
+            probabilities = torch.softmax(output2, dim=1).cpu().numpy()
+            predicted_class2 = torch.argmax(output2, dim=1).cpu().numpy()            
+            prediction2.append(predicted_class2[0])
+            # 各クラスの確信度を保存
+            all_confidence2.append(probabilities[0])
+
+    return predictions, prediction2, all_confidence2
+
+# 学習したモデルのパラメータを保存する関数
+# model_save_path = './models'
+def save_model(model, optimizer, epoch, path):
+    torch.save({
+        'epoch': epoch,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+    }, path)
 
 # データセットの準備
 train_data_folder = "./data_csv/train"
 test_data_folder = "./data_csv/test"
+eva_data_folder = "./data_csv/eva"
 label_file = "./label.csv"
 train_dataset = CsvDatasetWithLabels(train_data_folder, label_file)
 test_dataset = CsvDatasetWithoutLabels(test_data_folder)
 test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+eva_dataset = CsvDatasetWithoutLabels(eva_data_folder)
+eva_loader = DataLoader(eva_dataset, batch_size=1, shuffle=False)
 
-# 23次元学習用の設定--------------------------------
-# input_dim = 23  # 23個の特徴量
-# # input_dim = 13  # 13個の特徴量(pText削除)
-# hidden_dim = 64  # hidden_dimはnum_headsで割り切れる値にする
-# num_heads = 1    # num_headsをinput_dimの約数にする（例：2）
-# # num_heads = 7    # num_headsをinput_dimの約数にする（例：2）
-# # num_layers = 4
-# num_layers = 10
-# num_classes = 4  # 4値分類 (0, 1, 2, 3)
-# # learning_rate = 0.001
-# learning_rate = 0.001
 # -----------------------------------------------
-# 24次元学習用の設定--------------------------------
+# 18次元学習用の設定--------------------------------
 input_dim = 18  # 18個の特徴量
 hidden_dim = 64  # hidden_dimはnum_headsで割り切れる値にする(Input X 4程度)
 # hidden_dim = 96  # hidden_dimはnum_headsで割り切れる値にする(Input X 4程度)
@@ -229,7 +254,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 cross_validate(train_dataset, k_folds, TransformerClassificationModel, input_dim, hidden_dim, num_heads, num_layers, num_classes, learning_rate, num_epochs, device)
 
 # 全データで再学習とテスト推論
-predictions = final_training_and_testing(train_dataset, test_loader, TransformerClassificationModel, input_dim, hidden_dim, num_heads, num_layers, num_classes, learning_rate, num_epochs, device)
+predictions, prediction2, all_confidence2 = final_training_and_testing(train_dataset, test_loader, eva_loader, TransformerClassificationModel, input_dim, hidden_dim, num_heads, num_layers, num_classes, learning_rate, num_epochs, device) 
 
 # # テスト結果と比較して正解率を計算
 results_df = pd.read_csv('./results.csv')  # 正解のテスト結果が書かれたCSV
@@ -241,7 +266,12 @@ accuracy = sum(true_labels == pred_labels) / len(true_labels) * 100
 print(f'Test Accuracy: {accuracy:.2f}%')
 # # -------------------------------------------------------
 # # -------------------------------------------------------
-# # -------------------------------------------------------
+evapred2_df = pd.DataFrame(prediction2)
+evapred2_df.columns = ["pred"]
+allconf2_df = pd.DataFrame(all_confidence2)
+allconf2_df.columns = ["A(0)", "E(1)", "I(2)", "N(3)"]
+evapred2_df = pd.concat([evapred2_df, allconf2_df], axis=1)
+evapred2_df.to_csv('predict_eva.csv', index=False)
 # # -------------------------------------------------------
 # # -------------------------------------------------------
 # # -------------------------------------------------------
