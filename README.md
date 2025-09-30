@@ -159,7 +159,11 @@ predict_eva.csv：評価結果出力結果<br>
 出力ファイルには、4値分類の予測と、その予測の確信度合いが出力される。<br>
 確信度合いに重みを掛けて点数付けをすることが可能である。<br>
 
-
+The results of executing the evaluation described in (4) above are output to the following file.<br>
+<Output file:data2><br>
+predict_eva.csv: Evaluation result output<br>
+The output file contains predictions for the four-value classification and the confidence level for each prediction.<br>
+It is possible to assign scores by weighting the confidence levels.<br>
 
 ## フォルダ構成(Folder Structure)
 <details>
