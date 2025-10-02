@@ -64,14 +64,6 @@ results.csv: Test data labels<br>
 評価データ(eva[63サンプル])<br>
 学習データにはデータ増強サンプルも全て含まれている。<br>
 
-The dataset is stored on HuggingFace (see related links).<br>
-When running the program, a folder named csv_recovered is created, and csv files are downloaded there.<br>
-Before running, set your HuggingFace token in HUGGINGFACE_HUB_TOKEN.<br>
-Rename the folder csv_recovered to data_csv.<br>
-Training data (train [7,054 samples] / test [255 samples])<br>
-Evaluation data (eva [63 samples])<br>
-All augmented samples are included in the training data.<br>
-
 ## 動作環境(Execution Environment)
 - Windows / Python(Anaconda等)など
 
@@ -109,61 +101,12 @@ TED talkサイトからスピーチ動画をダウンロードして640x480の�
 train/testデータによる4値分類学習プログラムの最後で、evaデータによる評価を行う。<br>
 evaデータは63サンプル(11,11,13,13,15サンプルの5つのスピーチ)から構成される。<br>
 
-(0) Download mp4 video data<br>
-Download speech videos from the TED talk site and resize them to 640x480.
-TED videos are free to use for non-commercial purposes.
-From the mp4 speech videos, obtain skeletal coordinate time-series data using the Movenet model.
-In parallel, extract mp3 audio intensity from the same mp4 video and synchronize it with the skeletal coordinates.<br>
-
-(1) Core Sample Creation<br>
-From the skeletal coordinates + audio intensity time-series data of each speech video, extract 10-second upper-body core samples.
-Number of sample data: 996.<br>
-
-(2) Sample Data Augmentation<br>
-Augment the sample data using the following two methods.
-This increases the number of samples to 7,054.
-
-Sliding Window (SW)
-Generate data by sliding over the time window.
-For example, if the target duration is 15.6 seconds, only one 10-second sample can be obtained,
-but applying SW makes it possible to create int(15.6 - 9) = 6 samples.
-
-Data Modification (Deactivation)
-By deactivating the left/right wrists or audio of expert-level videos, create intermediate/novice-level samples.<br>
-
-(3) 4-Class Classification Training<br>
-Use a 4-class classification model based on the decoder part of a transformer deep learning model.
-The four classes are:
-A: Advanced (highly skilled),
-E: Expert (skilled),
-I: Intermediate,
-N: Novice.<br>
-
-Supervised learning was performed with labels A, E, I, N assigned by the author.
-
-The dataset csv files consist of 240 frames (10 seconds) × 18 dimensions:
-17 skeletal coordinates and 1 audio intensity.
-
-The skeletal coordinates include X, Y positions of left/right shoulders, elbows, wrists, and X positions of the nose and left/right eyes/ears (17 total).
-The former mainly capture hand movements, while the latter are expected to capture facial orientation (eye contact).<br>
-
-(4) Evaluation<br>
-The model trained in step (3) can be used as an evaluation model.
-At the end of the 4-class classification training program using train/test data, evaluation is performed with eva data.
-The eva dataset consists of 63 samples (5 speeches with 11, 11, 13, 13, 15 samples each).<br>
-
 ## 出力ファイルと保存先(Output Files and Storage)
 上記(4)評価を実行した結果の例を以下のファイルに出力される。<br>
 - 出力ファイル:data<br>
 predict_eva.csv：評価結果出力結果<br>
 出力ファイルには、4値分類の予測と、その予測の確信度合いが出力される。<br>
 確信度合いに重みを掛けて点数付けをすることが可能である。<br>
-
-The results of executing the evaluation described in (4) above are output to the following file.<br>
-- Output file:data<br>
-predict_eva.csv: Evaluation result output<br>
-The output file contains predictions for the four-value classification and the confidence level for each prediction.<br>
-It is possible to assign scores by weighting the confidence levels.<br>
 
 ## フォルダ構成(Folder Structure)
 <details>
